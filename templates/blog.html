@@ -1,0 +1,93 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+	<!-- Start All Pages -->
+	<div class="all-page-title page-breadcrumb">
+		<div class="container text-center">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1>Blog</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End All Pages -->
+
+    	
+	<!-- Start blog -->
+	<div class="blog-box">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="heading-title text-center">
+						<h2>Blog</h2>
+						<p>Want to know more about food ?</p> <p> Through a variety of articles you'll gain a lot of knowledge about food from all over the world</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				{% for blog in blogs %}
+				<div class="col-lg-4 col-md-6 col-12">
+					<div class="blog-box-inner">
+						<div class="blog-img-box">
+							<img class="img-fluid" src="{% static 'images/blog-img-01.jpg' %}" alt="">
+						</div>
+						<div class="blog-detail">
+							<h4>{{blog.topic}}.</h4>
+							<ul>
+								<li><span>Post by {{blog.author}}</span></li>
+								<li>|</li>
+								<li><span>{{blog.created}}</span></li>
+							</ul>
+							<p>{{blog.text}} </p>
+							<a class="btn btn-lg btn-circle btn-outline-new-white" href="{% url 'single-blog' blog.id %}">Read More</a>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+
+
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="heading-title text-center">
+							<span>
+								{% if page_obj.has_previous %}
+								<a href="?page={{ page_obj.previous_page_number }}">« Previous</a>
+							  
+								{% if page_obj.number > 3 %}
+								  <a href="?page=1">1</a>
+								  {% if page_obj.number > 4 %}
+									<span>...</span>
+								  {% endif %}
+								{% endif %}
+							  {% endif %}
+							  
+							  {% for num in page_obj.paginator.page_range %}
+								{% if page_obj.number == num %}
+								  <a href="?page={{ num }}">{{ num }}</a>
+								{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+								  <a href="?page={{ num }}">{{ num }}</a>
+								{% endif %}
+							  {% endfor %}
+							  
+							  {% if page_obj.has_next %}
+								{% if page_obj.number < page_obj.paginator.num_pages|add:'-3' %}
+								  <span>...</span>
+								  <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+								{% elif page_obj.number < page_obj.paginator.num_pages|add:'-2' %}
+								  <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+								{% endif %}
+							  
+								<a href="?page={{ page_obj.next_page_number }}">Next »</a>
+							  {% endif %}
+							</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End blog -->
+	
+{% endblock %}

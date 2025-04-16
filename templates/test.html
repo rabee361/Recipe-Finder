@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+<body>
+
+    <form>
+        <input type="text" name="q" placeholder="enter an ingredient" >
+        <input type="submit">
+    </form>
+
+    {% for recipe in recipes %}
+
+    <div>
+        <p>{{recipe.name}}</p>
+        <small>
+            {% for i in recipe.ingredient.all %}
+                <li>{{i}}</li>
+            {% endfor %}
+
+        </small>
+    </div>
+
+    {% endfor %}
+</body>
+</html>
